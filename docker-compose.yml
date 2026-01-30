@@ -1,0 +1,78 @@
+# docker-compose.yml para GProA - Capacitación Bancos y Aseguradoras
+# Levanta el ecosistema completo: Frontend, PostgreSQL y Redis
+
+version: '3.8'
+
+services:
+  # Frontend - Aplicación React con Vite
+  frontend:
+    build:
+      context: ./capacita-seguros
+      dockerfile: Dockerfile
+    container_name: gproa-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./capacita-seguros:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3001/api
+      - NODE_ENV=development
+    depends_on:
+      - db
+      - cache
+    networks:
+      - gproa-network
+    restart: unless-stopped
+
+  # Base de datos PostgreSQL - Persistencia de datos de agentes y exámenes
+  db:
+    image: postgres:15-alpine
+    container_name: gproa-db
+    environment:
+      - POSTGRES_USER=gproa_user
+      - POSTGRES_PASSWORD=gproa_password
+      - POSTGRES_DB=gproa_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - gproa-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gproa_user -d gproa_database"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis - Cache y sesiones para simuladores
+  cache:
+    image: redis:7-alpine
+    container_name: gproa-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - gproa-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Redes para comunicación entre servicios
+networks:
+  gproa-network:
+    driver: bridge
+
+# Volúmenes para persistencia de datos
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
