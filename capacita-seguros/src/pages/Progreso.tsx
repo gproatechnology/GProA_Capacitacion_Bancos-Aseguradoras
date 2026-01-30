@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import './Progreso.css';
 
@@ -45,7 +44,6 @@ const datosProgreso = {
 };
 
 export const Progreso = () => {
-  const navigate = useNavigate();
   const progressChartRef = useRef<HTMLCanvasElement>(null);
   const performanceChartRef = useRef<HTMLCanvasElement>(null);
   const timeChartRef = useRef<HTMLCanvasElement>(null);
@@ -150,7 +148,7 @@ export const Progreso = () => {
     const chartHeight = height - 2 * padding;
     const barWidth = chartWidth / data.categories.length / 2;
 
-    data.categories.forEach((category: string, index: number) => {
+    data.categories.forEach((_category: string, index: number) => {
       const x = padding + index * (chartWidth / data.categories.length);
       const userHeight = (data.user[index] / 10) * chartHeight;
       const avgHeight = (data.average[index] / 10) * chartHeight;
@@ -489,7 +487,7 @@ export const Progreso = () => {
 };
 
 // Función auxiliar para ajustar colores
-const adjustColor = (color: string, amount: number) => {
+const adjustColor = (color: string, _amount: number) => {
   // Simplificación: mapa de colores fijos
   const colorMap: { [key: string]: string } = {
     '#4facfe': '#2a8df8',

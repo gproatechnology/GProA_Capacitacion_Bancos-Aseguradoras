@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useExamStore, useFormattedTime, useExamProgress } from '../store/examStore';
-import { sampleExam, Question } from '../types/exam';
+import { sampleExam } from '../types/exam';
 import { useAuthStore } from '../store/authStore';
-import { Logo } from '../components/Logo';
 import './SimuladorExamen.css';
 
 export const SimuladorExamen = () => {
@@ -81,10 +80,6 @@ export const SimuladorExamen = () => {
 
   const getAnsweredCount = () => answers.length;
   const getCurrentQuestion = () => currentExam?.questions[currentQuestionIndex];
-  const isCurrentAnswered = () => {
-    const q = getCurrentQuestion();
-    return q ? answers.some(a => a.questionId === q.id) : false;
-  };
 
   // Pantalla de inicio del examen
   if (!isExamStarted) {

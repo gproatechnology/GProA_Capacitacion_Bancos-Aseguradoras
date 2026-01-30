@@ -11,10 +11,6 @@ export const generateSecureId = (): string => {
 
 // === UTILIDADES DE SEGURIDAD ===
 
-// Regex para validación robusta de contraseña
-// Mínimo: 12 caracteres, 1 mayúscula, 1 minúscula, 1 número, 1 símbolo
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,#%^&*()_+\-=\[\]{};':"\\|,.<>/`~])[A-Za-z\d@$!%*?&.,#%^&*()_+\-=\[\]{};':"\\|,.<>/`~]{12,}$/;
-
 // Email validation regex
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

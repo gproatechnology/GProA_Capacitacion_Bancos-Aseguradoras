@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useAuthStore } from '../store/authStore';
 import { Logo } from './Logo';
 import splashImage from '../assets/splashscreen.png';
 import './SplashScreen.css';

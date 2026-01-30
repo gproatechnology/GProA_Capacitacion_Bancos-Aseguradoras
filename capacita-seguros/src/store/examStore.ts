@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Exam, ExamResult, UserAnswer, Question, sampleExam } from '../types/exam';
+import { Exam, ExamResult, UserAnswer, sampleExam } from '../types/exam';
 import { useAuthStore } from './authStore';
 
 // Generador de ID seguro (duplicado para evitar dependencia circular)
